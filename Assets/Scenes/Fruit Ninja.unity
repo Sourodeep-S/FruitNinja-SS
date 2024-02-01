@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.46169513, g: 0.5124164, b: 0.58993304, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -329,7 +329,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7c2d4fe34158ab84da548706a5b29b58, type: 2}
+  - {fileID: 2100000, guid: a3220b0efc681ca4ca31201b3a6ec487, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -607,21 +607,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 995354831}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c791fe978b24c9a4b8226608b4187fd6, type: 3}
+  m_Script: {fileID: 11500000, guid: cf67bc3aa0b86354ebda6878eda1c561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fruitPrefabs:
-  - {fileID: 1131589110020706280, guid: 0828fb0c18a05884394c1b6798cdf56f, type: 3}
-  - {fileID: 1131589110020706280, guid: 8f89d65fafb216741b598ebb57d50fc3, type: 3}
-  - {fileID: 1131589110020706280, guid: 419df4f902026524a823c481638464aa, type: 3}
-  - {fileID: 1131589110020706280, guid: 3d4bd88dc2748644288c81bd4d18b0c9, type: 3}
-  - {fileID: 1131589110020706280, guid: dc83651b6c88bab40969aa625bb8dd10, type: 3}
+  - {fileID: 1345022896480124042, guid: a90ffa1befc33e4479cfb37fb5dece47, type: 3}
+  - {fileID: 3469416261526121853, guid: d5e3dc92758004c448ebb9c91d4562cd, type: 3}
+  - {fileID: 9137535743039622809, guid: 6a28310721d8ca54086c5c300a663b94, type: 3}
+  - {fileID: 6161171722280899850, guid: 024483f068cf0b145911881e8958d511, type: 3}
+  - {fileID: 1322510157125763251, guid: e80fcfc9f70e2c640a4d22775c8860de, type: 3}
+  bombPrefab: {fileID: 502755466114576495, guid: d99c48bb415f49e47980e58f71e639bb, type: 3}
+  bombChance: 0.05
   minSpawnDelay: 0.25
   maxSpawnDelay: 1
-  minAngle: -20
-  maxAngle: 20
+  minAngle: -15
+  maxAngle: 15
   minForce: 18
-  maxForce: 21
+  maxForce: 22
   maxLifetime: 5
 --- !u!4 &995354834
 Transform:
@@ -681,7 +683,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1960399374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615a50d537594614c8961e9206682b1f, type: 3}
+  m_Script: {fileID: 11500000, guid: 95a81be6c9d47f64d9e8262eed6997fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sliceForce: 5
