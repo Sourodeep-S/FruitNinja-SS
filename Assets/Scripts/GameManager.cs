@@ -4,114 +4,124 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+  public static GameManager Instance { get; private set; }
 
-    [SerializeField] private Blade blade;
-    [SerializeField] private Spawner spawner;
-    [SerializeField] private Text scoreText;
-    [SerializeField] private Image fadeImage;
+  [SerializeField] private Blade blade;
+  [SerializeField] private Spawner spawner;
+  [SerializeField] private Text scoreText;
+  [SerializeField] private Image fadeImage;
 
-    private int score;
-    public int Score => score;
+  private PlaySoundEffects sound;
+  private int score;
+  public int Score => score;
 
-    private void Awake()
+  private void Awake()
+  {
+    if (Instance != null)
     {
-        if (Instance != null) {
-            DestroyImmediate(gameObject);
-        } else {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+      DestroyImmediate(gameObject);
+    }
+    else
+    {
+      Instance = this;
+      DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
+    sound = GetComponent<PlaySoundEffects>();
+  }
+
+  private void Start()
+  {
+    NewGame();
+  }
+
+  private void NewGame()
+  {
+    sound.playStartSound();
+    Time.timeScale = 1f;
+
+    ClearScene();
+
+    blade.enabled = true;
+    spawner.enabled = true;
+
+    score = 0;
+    scoreText.text = score.ToString();
+  }
+
+  private void ClearScene()
+  {
+    Fruit[] fruits = FindObjectsByType<Fruit>(FindObjectsSortMode.None);
+
+    foreach (Fruit fruit in fruits)
     {
-        NewGame();
+      Destroy(fruit.gameObject);
     }
 
-    private void NewGame()
+    Bomb[] bombs = FindObjectsByType<Bomb>(FindObjectsSortMode.None);
+
+    foreach (Bomb bomb in bombs)
     {
-        Time.timeScale = 1f;
+      Destroy(bomb.gameObject);
+    }
+  }
 
-        ClearScene();
+  public void IncreaseScore(int points)
+  {
+    score += points;
+    scoreText.text = score.ToString();
 
-        blade.enabled = true;
-        spawner.enabled = true;
+    float hiscore = PlayerPrefs.GetFloat("hiscore", 0);
 
-        score = 0;
-        scoreText.text = score.ToString();
+    if (score > hiscore)
+    {
+      hiscore = score;
+      PlayerPrefs.SetFloat("hiscore", hiscore);
+    }
+  }
+
+  public void Explode()
+  {
+    sound.playbombSound();
+    blade.enabled = false;
+    spawner.enabled = false;
+
+    StartCoroutine(ExplodeSequence());
+  }
+
+  private IEnumerator ExplodeSequence()
+  {
+    float elapsed = 0f;
+    float duration = 0.5f;
+
+    // Fade to white
+    while (elapsed < duration)
+    {
+      float t = Mathf.Clamp01(elapsed / duration);
+      fadeImage.color = Color.Lerp(Color.clear, Color.white, t);
+
+      Time.timeScale = 1f - t;
+      elapsed += Time.unscaledDeltaTime;
+
+      yield return null;
     }
 
-    private void ClearScene()
+    yield return new WaitForSecondsRealtime(1f);
+
+    NewGame();
+
+    elapsed = 0f;
+
+    // Fade back in
+    while (elapsed < duration)
     {
-        Fruit[] fruits = FindObjectsOfType<Fruit>();
+      float t = Mathf.Clamp01(elapsed / duration);
+      fadeImage.color = Color.Lerp(Color.white, Color.clear, t);
 
-        foreach (Fruit fruit in fruits) {
-            Destroy(fruit.gameObject);
-        }
+      elapsed += Time.unscaledDeltaTime;
 
-        Bomb[] bombs = FindObjectsOfType<Bomb>();
-
-        foreach (Bomb bomb in bombs) {
-            Destroy(bomb.gameObject);
-        }
+      yield return null;
     }
-
-    public void IncreaseScore(int points)
-    {
-        score += points;
-        scoreText.text = score.ToString();
-
-        float hiscore = PlayerPrefs.GetFloat("hiscore", 0);
-
-        if (score > hiscore)
-        {
-            hiscore = score;
-            PlayerPrefs.SetFloat("hiscore", hiscore);
-        }
-    }
-
-    public void Explode()
-    {
-        blade.enabled = false;
-        spawner.enabled = false;
-
-        StartCoroutine(ExplodeSequence());
-    }
-
-    private IEnumerator ExplodeSequence()
-    {
-        float elapsed = 0f;
-        float duration = 0.5f;
-
-        // Fade to white
-        while (elapsed < duration)
-        {
-            float t = Mathf.Clamp01(elapsed / duration);
-            fadeImage.color = Color.Lerp(Color.clear, Color.white, t);
-
-            Time.timeScale = 1f - t;
-            elapsed += Time.unscaledDeltaTime;
-
-            yield return null;
-        }
-
-        yield return new WaitForSecondsRealtime(1f);
-
-        NewGame();
-
-        elapsed = 0f;
-
-        // Fade back in
-        while (elapsed < duration)
-        {
-            float t = Mathf.Clamp01(elapsed / duration);
-            fadeImage.color = Color.Lerp(Color.white, Color.clear, t);
-
-            elapsed += Time.unscaledDeltaTime;
-
-            yield return null;
-        }
-    }
+  }
 
 }
