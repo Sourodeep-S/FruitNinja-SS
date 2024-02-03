@@ -4,5 +4,5 @@
 
 - **Topics**: Physics, 3D Models, Particle Effects
 - **Version**: Unity 2023.2.7f1 (LTS)
-- [**Download**](https://github.com/Sourodeep-S/FruitNinja-SS/releases/tag/v1.0.0(Final))
+- [**Download**](https://github.com/Sourodeep-S/FruitNinja-SS/releases/tag/v1.0.1(Final))
 
